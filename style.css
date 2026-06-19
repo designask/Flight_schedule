@@ -323,7 +323,8 @@ textarea { resize: vertical; }
   padding: 10px 6px;
   color: var(--accent);
 }
-.offer__cal-icon { font-size: 26px; line-height: 1; }
+.offer__cal-icon { display: flex; align-items: center; justify-content: center; line-height: 0; }
+.offer__cal-icon svg { display: block; width: 36px; height: 36px; }
 .offer__cal-date { font-size: 16px; font-weight: 800; margin-top: 6px; word-break: break-word; }
 
 /* Middle route block */

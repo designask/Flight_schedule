@@ -249,7 +249,23 @@
       // calendar
       var cal = document.createElement("div");
       cal.className = "offer__cal";
-      cal.innerHTML = '<div class="offer__cal-icon">📅</div><div class="offer__cal-date"></div>';
+      cal.innerHTML =
+        '<div class="offer__cal-icon">' +
+          '<svg viewBox="0 0 24 24" width="36" height="36" fill="none" ' +
+            'stroke="currentColor" stroke-width="1.8" stroke-linecap="round" ' +
+            'stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+            '<rect x="3" y="4.5" width="18" height="16.5" rx="2.6"></rect>' +
+            '<line x1="3" y1="9.5" x2="21" y2="9.5"></line>' +
+            '<line x1="7.8" y1="2.5" x2="7.8" y2="6.3"></line>' +
+            '<line x1="16.2" y1="2.5" x2="16.2" y2="6.3"></line>' +
+            '<circle cx="8" cy="13.5" r="1.1" fill="currentColor" stroke="none"></circle>' +
+            '<circle cx="12" cy="13.5" r="1.1" fill="currentColor" stroke="none"></circle>' +
+            '<circle cx="16" cy="13.5" r="1.1" fill="currentColor" stroke="none"></circle>' +
+            '<circle cx="8" cy="17.3" r="1.1" fill="currentColor" stroke="none"></circle>' +
+            '<circle cx="12" cy="17.3" r="1.1" fill="currentColor" stroke="none"></circle>' +
+          '</svg>' +
+        '</div>' +
+        '<div class="offer__cal-date"></div>';
       cal.querySelector(".offer__cal-date").textContent = escapeText(row.date) || "—";
 
       // routes
