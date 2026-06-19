@@ -15,7 +15,7 @@
       title: "FLYDUBAI",
       subtitle: "VISA CHANGE AVAILABLE",
       description: "Affordable round-trip fares for your UAE visa change. Limited seats — book early to lock in the price.",
-      footerImg: "",       // data URL string (bottom banner image)
+      footer: "www.yourtravelagency.com",
       themeColor: "#e11d2a",
       rows: [
         {
@@ -47,7 +47,7 @@
       base.title = parsed.title != null ? parsed.title : base.title;
       base.subtitle = parsed.subtitle != null ? parsed.subtitle : base.subtitle;
       base.description = parsed.description != null ? parsed.description : base.description;
-      base.footerImg = parsed.footerImg || "";
+      base.footer = parsed.footer != null ? parsed.footer : base.footer;
       base.themeColor = parsed.themeColor || base.themeColor;
       if (Array.isArray(parsed.rows)) base.rows = parsed.rows;
       return base;
@@ -80,8 +80,7 @@
     title: $("title"),
     subtitle: $("subtitle"),
     description: $("description"),
-    footerInput: $("footerInput"),
-    footerClear: $("footerClear"),
+    footer: $("footer"),
     themeColor: $("themeColor"),
     rowsEditor: $("rowsEditor"),
     addRowBtn: $("addRowBtn"),
@@ -97,7 +96,6 @@
     posterDesc: $("posterDesc"),
     posterRows: $("posterRows"),
     posterFooter: $("posterFooter"),
-    posterFooterImg: $("posterFooterImg"),
     rowTemplate: $("rowEditorTemplate")
   };
 
@@ -138,6 +136,7 @@
     syncTitleControl();
     els.subtitle.value = state.subtitle;
     els.description.value = state.description;
+    els.footer.value = state.footer;
     els.themeColor.value = state.themeColor;
   }
 
@@ -219,15 +218,7 @@
     els.posterTitle.textContent = escapeText(state.title);
     els.posterSubtitle.textContent = escapeText(state.subtitle);
     els.posterDesc.textContent = escapeText(state.description);
-
-    // footer image (bottom banner)
-    if (state.footerImg) {
-      els.posterFooterImg.src = state.footerImg;
-      els.posterFooter.classList.add("has-img");
-    } else {
-      els.posterFooterImg.removeAttribute("src");
-      els.posterFooter.classList.remove("has-img");
-    }
+    els.posterFooter.textContent = escapeText(state.footer);
 
     renderPosterRows();
   }
@@ -340,23 +331,7 @@
     });
     els.subtitle.addEventListener("input", function () { state.subtitle = els.subtitle.value; renderPoster(); saveState(); });
     els.description.addEventListener("input", function () { state.description = els.description.value; renderPoster(); saveState(); });
-
-    // footer image upload
-    els.footerInput.addEventListener("change", function () {
-      var file = els.footerInput.files && els.footerInput.files[0];
-      if (!file) return;
-      readFileAsDataURL(file, function (url) {
-        state.footerImg = url;
-        renderPoster();
-        saveState();
-      });
-    });
-    els.footerClear.addEventListener("click", function () {
-      state.footerImg = "";
-      els.footerInput.value = "";
-      renderPoster();
-      saveState();
-    });
+    els.footer.addEventListener("input", function () { state.footer = els.footer.value; renderPoster(); saveState(); });
 
     // theme color
     els.themeColor.addEventListener("input", function () {
