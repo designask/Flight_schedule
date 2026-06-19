@@ -54,7 +54,15 @@
 
         <label class="field">
           <span>Main title</span>
-          <input type="text" id="title" placeholder="e.g. AIR ARABIA" />
+          <select id="title">
+            <!-- Add more airlines here as new <option> lines -->
+            <option value="FLYDUBAI">FLYDUBAI</option>
+            <option value="__custom__">Custom… (type your own)</option>
+          </select>
+        </label>
+        <label class="field" id="titleCustomWrap" hidden>
+          <span>Custom title</span>
+          <input type="text" id="titleCustom" placeholder="Type your airline / agency name" />
         </label>
 
         <label class="field">
