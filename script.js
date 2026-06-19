@@ -435,7 +435,7 @@
   }
 
   /* ============================================================
-     PDF EXPORT — A4 portrait, poster only
+     PDF EXPORT — single custom-size page sized to the poster, poster only
      ============================================================ */
   function exportPDF() {
     var poster = $("poster");
@@ -462,34 +462,21 @@
       windowHeight: poster.scrollHeight
     }).then(function (canvas) {
       var jsPDF = window.jspdf.jsPDF;
-      var pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
-      var pageW = pdf.internal.pageSize.getWidth();   // 210mm
-      var pageH = pdf.internal.pageSize.getHeight();  // 297mm
+      // Custom page size matching the poster, so everything fits on ONE page.
+      // Convert CSS pixels -> mm (96px per inch, 25.4mm per inch).
+      var PX_TO_MM = 25.4 / 96;
+      var pageW = poster.offsetWidth * PX_TO_MM;
+      var pageH = poster.offsetHeight * PX_TO_MM;
 
-      var imgW = pageW;
-      var imgH = (canvas.height * imgW) / canvas.width;
+      var pdf = new jsPDF({
+        orientation: pageH >= pageW ? "portrait" : "landscape",
+        unit: "mm",
+        format: [pageW, pageH]
+      });
 
       var imgData = canvas.toDataURL("image/jpeg", 0.95);
-
-      if (imgH <= pageH) {
-        // fits on a single page — center vertically
-        var yOffset = (pageH - imgH) / 2;
-        pdf.addImage(imgData, "JPEG", 0, yOffset > 0 ? yOffset : 0, imgW, imgH);
-      } else {
-        // taller than one page — slice across multiple pages
-        var position = 0;
-        var remaining = imgH;
-        while (remaining > 0) {
-          pdf.addImage(imgData, "JPEG", 0, position, imgW, imgH);
-          remaining -= pageH;
-          if (remaining > 0) {
-            pdf.addPage();
-            position -= pageH;
-          }
-        }
-      }
-
+      pdf.addImage(imgData, "JPEG", 0, 0, pageW, pageH);
       pdf.save("travel-offer.pdf");
     }).catch(function (err) {
       console.error(err);

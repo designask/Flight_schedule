@@ -1,7 +1,7 @@
 # Travel Offer PDF Generator
 
 A small, **fully client-side** web app for designing editable travel / airline offer
-posters and exporting them as **high-quality A4 PDFs** — right from the browser.
+posters and exporting them as **high-quality single-page PDFs** — right from the browser.
 No backend, no build step, no sign-up.
 
 Use the included sample (a UAE *visa-change* offer) as a starting point, edit every
@@ -28,7 +28,8 @@ and click **Download PDF**.
   price block on the right.
 - **Live preview** — the poster updates instantly as you type.
 - **Theme color picker** — change the main accent color of the whole poster.
-- **A4 PDF export** — exports **only the poster** (not the form), in A4 portrait,
+- **Single-page PDF export** — exports **only the poster** (not the form) as one
+  page sized to fit the whole poster (custom size, no page splitting),
   at 2× resolution for crisp output. The file is saved as `travel-offer.pdf`.
 - **Auto-save** — your work is stored in `localStorage`, so a refresh won't lose it.
 - **Reset button** — restores the original sample data.
@@ -43,7 +44,7 @@ and click **Download PDF**.
 ```
 .
 ├── index.html      # Markup: editor form + poster preview
-├── style.css       # All styling, including the poster layout (A4 proportions)
+├── style.css       # All styling, including the poster layout (width-fixed, height fits content)
 ├── script.js       # App logic: state, live preview, CRUD, localStorage, PDF export
 └── README.md
 ```
@@ -103,7 +104,7 @@ HTML/CSS/JS instead of Vite so there is nothing to compile.)
 | Offer rows (routes, times, prices) | The **Flight / Offer Rows** section |
 | Default sample data | `defaultState()` in `script.js` |
 | Fonts, spacing, card styles | `style.css` (poster styles are under the `.poster` selectors) |
-| Poster size / proportions | `.poster` width/height in `style.css` (currently 794×1123px = A4 @96dpi) |
+| Poster size / proportions | `.poster` width in `style.css` (794px wide; height fits content). The PDF page size is derived from this. |
 
 ### Tips
 - **Images:** wide banners (roughly 1200×450 or similar) look best. Logos with a

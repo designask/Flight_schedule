@@ -203,7 +203,7 @@ textarea { resize: vertical; }
 .poster {
   --pad: 34px;
   width: 794px;
-  min-height: 1123px;
+  /* Height fits the content so the PDF exports as a single custom-size page */
   background: #ffffff;
   color: var(--ink);
   position: relative;
@@ -300,7 +300,6 @@ textarea { resize: vertical; }
   flex-direction: column;
   gap: 16px;
   padding: 22px var(--pad) 0;
-  flex: 1 1 auto;
 }
 
 .offer {
