@@ -71,9 +71,12 @@
         </label>
 
         <label class="field">
-          <span>Footer / contact text (optional)</span>
-          <textarea id="footer" rows="2" placeholder="e.g. Call: 077 123 4567 • www.example.com"></textarea>
+          <span>Footer image (bottom banner)</span>
+          <input type="file" id="footerInput" accept="image/*" />
         </label>
+        <div class="field-inline">
+          <button type="button" class="btn btn--mini" id="footerClear">Remove footer image</button>
+        </div>
       </fieldset>
 
       <!-- Theme -->
@@ -121,7 +124,9 @@
 
           <div class="poster__rows" id="posterRows"></div>
 
-          <div class="poster__footer" id="posterFooter"></div>
+          <div class="poster__footer" id="posterFooter">
+            <img id="posterFooterImg" alt="" />
+          </div>
         </div>
       </div>
     </section>

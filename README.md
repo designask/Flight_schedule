@@ -17,8 +17,8 @@ and click **Download PDF**.
 ## ✨ Features
 
 - **Editable top section** — upload a banner image and a logo, edit the main title
-  (e.g. `AIR ARABIA`), subtitle (e.g. `VISA CHANGE AVAILABLE`), an optional
-  description, and a footer/contact line.
+  (chosen from a dropdown), subtitle (e.g. `VISA CHANGE AVAILABLE`), and an optional
+  description. You can also upload a **footer banner image** shown at the bottom.
 - **Editable offer rows** — add / edit / delete as many rows as you like. Each row has:
   date, from airport, departure time, to airport, arrival time, return-from,
   return departure time, return-to, return arrival time, price, currency, and notes.
@@ -96,8 +96,9 @@ HTML/CSS/JS instead of Vite so there is nothing to compile.)
 
 | What you want to change | Where |
 | --- | --- |
-| Banner / logo images | Use the **upload** fields in the editor |
-| Title, subtitle, description, footer | Editor text fields (type any language) |
+| Banner / logo / footer images | Use the **upload** fields in the editor |
+| Subtitle, description | Editor text fields (type any language) |
+| Main title | The **Main title** dropdown |
 | Accent / theme color | The **Main theme color** picker |
 | Offer rows (routes, times, prices) | The **Flight / Offer Rows** section |
 | Default sample data | `defaultState()` in `script.js` |
