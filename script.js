@@ -78,8 +78,6 @@
     logoInput: $("logoInput"),
     logoClear: $("logoClear"),
     title: $("title"),
-    titleCustom: $("titleCustom"),
-    titleCustomWrap: $("titleCustomWrap"),
     subtitle: $("subtitle"),
     description: $("description"),
     footer: $("footer"),
@@ -116,27 +114,22 @@
   /* ============================================================
      RENDER: editor inputs <- state
      ============================================================ */
-  // Does the current title match one of the dropdown's preset options?
+  // Does the current title match one of the dropdown's options?
   function titleIsPreset(value) {
     var opts = els.title.options;
     for (var i = 0; i < opts.length; i++) {
-      if (opts[i].value !== "__custom__" && opts[i].value === value) return true;
+      if (opts[i].value === value) return true;
     }
     return false;
   }
 
-  // Sync the title dropdown + custom input to match state.title
+  // Sync the title dropdown to match state.title
   function syncTitleControl() {
-    if (titleIsPreset(state.title)) {
-      els.title.value = state.title;
-      els.titleCustomWrap.hidden = true;
-      els.titleCustom.value = "";
-    } else {
-      // not a preset -> use the "Custom…" option and reveal the text input
-      els.title.value = "__custom__";
-      els.titleCustomWrap.hidden = false;
-      els.titleCustom.value = state.title;
+    if (!titleIsPreset(state.title) && els.title.options.length) {
+      // fall back to the first available option
+      state.title = els.title.options[0].value;
     }
+    els.title.value = state.title;
   }
 
   function renderEditorFields() {
@@ -332,20 +325,7 @@
     // text fields
     // title dropdown
     els.title.addEventListener("change", function () {
-      if (els.title.value === "__custom__") {
-        els.titleCustomWrap.hidden = false;
-        state.title = els.titleCustom.value;
-        els.titleCustom.focus();
-      } else {
-        els.titleCustomWrap.hidden = true;
-        state.title = els.title.value;
-      }
-      renderPoster();
-      saveState();
-    });
-    // custom title text input
-    els.titleCustom.addEventListener("input", function () {
-      state.title = els.titleCustom.value;
+      state.title = els.title.value;
       renderPoster();
       saveState();
     });
