@@ -18,7 +18,8 @@ and click **Download PDF**.
 
 - **Editable top section** — upload a banner image and a logo, edit the main title
   (e.g. `AIR ARABIA`), subtitle (e.g. `VISA CHANGE AVAILABLE`), an optional
-  description, and a footer/contact line.
+  description, and a footer/contact line. The footer can also show an optional
+  uploaded image (e.g. a contact banner) together with or instead of the text.
 - **Editable offer rows** — add / edit / delete as many rows as you like. Each row has:
   date, from airport, departure time, to airport, arrival time, return-from,
   return departure time, return-to, return arrival time, price, currency, and notes.
