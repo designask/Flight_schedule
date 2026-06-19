@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Offer PDF Generator</title>
+  <meta name="description" content="Create editable travel / airline offer posters and export them as A4 PDFs, fully in the browser." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header__inner">
+      <div class="app-header__brand">
+        <span class="app-header__logo">✈</span>
+        <div>
+          <h1>Travel Offer PDF Generator</h1>
+          <p>Design an editable airline / travel offer poster and export it as an A4 PDF.</p>
+        </div>
+      </div>
+      <div class="app-header__actions">
+        <button id="resetBtn" type="button" class="btn btn--ghost">Reset</button>
+        <button id="downloadBtn" type="button" class="btn btn--primary">Download PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- ============ EDITOR PANEL ============ -->
+    <section class="editor" aria-label="Poster editor">
+      <h2 class="editor__heading">Editor</h2>
+
+      <!-- Top section -->
+      <fieldset class="field-group">
+        <legend>Top Section</legend>
+
+        <label class="field">
+          <span>Banner image (top)</span>
+          <input type="file" id="bannerInput" accept="image/*" />
+        </label>
+        <div class="field-inline">
+          <button type="button" class="btn btn--mini" id="bannerClear">Remove banner</button>
+        </div>
+
+        <label class="field">
+          <span>Logo image</span>
+          <input type="file" id="logoInput" accept="image/*" />
+        </label>
+        <div class="field-inline">
+          <button type="button" class="btn btn--mini" id="logoClear">Remove logo</button>
+        </div>
+
+        <label class="field">
+          <span>Main title</span>
+          <input type="text" id="title" placeholder="e.g. AIR ARABIA" />
+        </label>
+
+        <label class="field">
+          <span>Subtitle</span>
+          <input type="text" id="subtitle" placeholder="e.g. VISA CHANGE AVAILABLE" />
+        </label>
+
+        <label class="field">
+          <span>Description (optional)</span>
+          <textarea id="description" rows="2" placeholder="Short description shown under the title"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Footer / contact text (optional)</span>
+          <textarea id="footer" rows="2" placeholder="e.g. Call: 077 123 4567 • www.example.com"></textarea>
+        </label>
+      </fieldset>
+
+      <!-- Theme -->
+      <fieldset class="field-group">
+        <legend>Theme</legend>
+        <label class="field field--row">
+          <span>Main theme color</span>
+          <input type="color" id="themeColor" value="#e11d2a" />
+        </label>
+      </fieldset>
+
+      <!-- Rows -->
+      <fieldset class="field-group">
+        <legend>Flight / Offer Rows</legend>
+        <div id="rowsEditor" class="rows-editor"></div>
+        <button type="button" class="btn btn--secondary" id="addRowBtn">+ Add New Row</button>
+      </fieldset>
+    </section>
+
+    <!-- ============ PREVIEW PANEL ============ -->
+    <section class="preview-panel" aria-label="Poster preview">
+      <div class="preview-panel__bar">
+        <h2>Live Preview</h2>
+        <span class="preview-panel__hint">A4 • exported as travel-offer.pdf</span>
+      </div>
+
+      <div class="preview-scroll">
+        <!-- This is the ONLY element exported to PDF -->
+        <div id="poster" class="poster">
+          <div class="poster__banner" id="posterBanner">
+            <img id="posterBannerImg" alt="" />
+          </div>
+
+          <div class="poster__header">
+            <div class="poster__logo" id="posterLogo">
+              <img id="posterLogoImg" alt="" />
+            </div>
+            <div class="poster__titles">
+              <h3 class="poster__title" id="posterTitle">AIR ARABIA</h3>
+              <p class="poster__subtitle" id="posterSubtitle">VISA CHANGE AVAILABLE</p>
+            </div>
+          </div>
+
+          <p class="poster__desc" id="posterDesc"></p>
+
+          <div class="poster__rows" id="posterRows"></div>
+
+          <div class="poster__footer" id="posterFooter"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Row template -->
+  <template id="rowEditorTemplate">
+    <div class="row-card" data-row>
+      <div class="row-card__head">
+        <strong class="row-card__label">Offer Row</strong>
+        <button type="button" class="btn btn--danger btn--mini" data-action="delete">Delete</button>
+      </div>
+      <div class="row-card__grid">
+        <label class="field"><span>Date</span><input type="text" data-field="date" placeholder="2025-07-15" /></label>
+        <label class="field"><span>Price</span><input type="text" data-field="price" placeholder="49,900" /></label>
+        <label class="field"><span>Currency</span><input type="text" data-field="currency" placeholder="LKR" /></label>
+
+        <label class="field"><span>From (airport)</span><input type="text" data-field="from" placeholder="CMB" /></label>
+        <label class="field"><span>Departure time</span><input type="text" data-field="depTime" placeholder="09:30" /></label>
+        <label class="field"><span>To (airport)</span><input type="text" data-field="to" placeholder="SHJ" /></label>
+        <label class="field"><span>Arrival time</span><input type="text" data-field="arrTime" placeholder="13:05" /></label>
+
+        <label class="field"><span>Return from</span><input type="text" data-field="rFrom" placeholder="SHJ" /></label>
+        <label class="field"><span>Return dep. time</span><input type="text" data-field="rDepTime" placeholder="18:40" /></label>
+        <label class="field"><span>Return to</span><input type="text" data-field="rTo" placeholder="CMB" /></label>
+        <label class="field"><span>Return arr. time</span><input type="text" data-field="rArrTime" placeholder="01:20" /></label>
+
+        <label class="field field--full"><span>Notes</span><input type="text" data-field="notes" placeholder="e.g. Includes 30kg baggage" /></label>
+      </div>
+    </div>
+  </template>
+
+  <!-- Browser-based PDF export libraries (loaded from CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
